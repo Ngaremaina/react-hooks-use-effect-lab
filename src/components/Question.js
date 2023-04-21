@@ -5,8 +5,21 @@ function Question({ question, onAnswered }) {
 
   // add useEffect code
   useEffect(() => {
-    console.log("use effect")
-  })
+    console.log("timer")
+    const timer = setInterval(() => {
+      setTimeRemaining(prevTime => prevTime - 1)
+    },1000)
+     return () => {
+      clearTimeout(timer);
+    };
+  },[timeRemaining])
+
+  useEffect(() => {
+    if (timeRemaining === 0) {
+      setTimeRemaining(10);
+      onAnswered(false);
+    }
+  }, [timeRemaining, onAnswered]);
 
   function handleAnswer(isCorrect) {
     setTimeRemaining(10);
